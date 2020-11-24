@@ -1,4 +1,5 @@
 FTTC verde                        055264278
+FTTC verde                        057383193   
 
 FTTC giallo x delta(HLOG)         0558068114
 FTTC giallo x delta(HLOG)         04114751975
@@ -9,7 +10,14 @@ FTTC rosso x allineamento(GM)     0572502646
 
 ADSL verde                        157314728793
 ADSL verde (MSAN)                 0473620454
+ADSL verde                        055450434   
 
 -------
 
 RTG verde                         0573775476   
+RTG verde                         0573774421
+RTG verde                         0573674161   
+
+RTG giallo                        055683745
+
+RTG rosso                         0558326314   
