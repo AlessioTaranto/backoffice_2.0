@@ -7,7 +7,8 @@ FTTC rosso x allineamento(GM)     0572502646
 
 -------
 
-ADSL verde                        157314728793  
+ADSL verde                        157314728793
+ADSL verde (MSAN)                 0473620454
 
 -------
 
