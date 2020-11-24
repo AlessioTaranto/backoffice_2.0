@@ -1,2 +1,1 @@
-
-print("MOla GAY prende i fuji al 20")
+print("hello world")
