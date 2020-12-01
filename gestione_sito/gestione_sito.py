@@ -6,67 +6,64 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 
-# Preparazione apertura finestra web
-driver = webdriver.Chrome()
-url = "https://one.tim.it"
-utenza = {"x1019428":"Cars.2020"}
 
-# Apertura finestra
-driver.get(url)
+# Classe atta alla gestione della navigazione nel sito internet
+class gestione_sito:
+    # Funzione di setup classe
+    def __init__(self, driver: webdriver.Chrome, url):
+        self.driver = driver
+        self.url = url
 
-# Funzione per accedere al sito
-def login(username, passworld):
-    print("Tentativo di login: " + url)
-    print("Nome: " + username + " Pass: " + passworld)
+        self.driver.get(self.url)
 
-    # Inserisci credenziali
-    try:
-        driver.find_element_by_name("user").send_keys(username)
-        driver.find_element_by_name("pwd").send_keys(passworld)
-        driver.find_element_by_xpath("//input[@type='submit']").click()
-        print("Login riuscito")
-    except:
-        print("ERRORE: credenziali errate")
+    # Funzione per accedere al sito
+    def login(self, username, passworld, tempo_massimo = 10):
+        print("Tentativo di login: " + self.url)
+        print("Nome: " + username + " Pass: " + passworld)
 
-    # Accetta il disclaimer del sito
-    try:
-        # Aspetta che il sito sia pronto
-        WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "ao-menu-box")))
-        time.sleep(0.5)
+        # Inserisci credenziali
+        try:
+            self.driver.find_element_by_name("user").send_keys(username)
+            self.driver.find_element_by_name("pwd").send_keys(passworld)
+            self.driver.find_element_by_xpath("//input[@type='submit']").click()
+            print("Login riuscito")
+        except:
+            print("ERRORE: credenziali errate")
 
-        # Accetta le condizioni del sito
-        driver.find_element_by_class_name("ao-menu-box").click()
+        # Accetta il disclaimer del sito
+        try:
+            # Aspetta che il sito sia pronto
+            WebDriverWait(self.driver, tempo_massimo).until(EC.presence_of_element_located((By.CLASS_NAME, "ao-menu-box")))
+            time.sleep(0.5)
 
-    # In caso l'atttesa del sito duri troppo
-    except TimeoutException:
-        print("ERRORE TIMEOUT: Attesa disclaimer troppo lunga")
+            # Accetta le condizioni del sito
+            self.driver.find_element_by_class_name("ao-menu-box").click()
 
+        # In caso l'atttesa del sito duri troppo
+        except TimeoutException:
+            print("ERRORE TIMEOUT: Attesa disclaimer troppo lunga")
 
-# Funzione di ricerca linea
-def cerca_linea(numero_linea):
-    print('\nRicerca linea: ' + numero_linea)
+    # Funzione di ricerca linea
+    def cerca_linea(self, numero_linea):
+        print('\nRicerca linea: ' + numero_linea)
 
-    # Inserisce il numero e inizia la ricerca
-    try:
-        # Aspetta che il sito sia pronto
-        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, 'ao_line_number')))
+        # Inserisce il numero e inizia la ricerca
+        try:
+            # Aspetta che il sito sia pronto
+            WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable((By.ID, 'ao_line_number')))
 
-        # Inserisce il numero nella barra di ricerca
-        driver.find_element_by_id('ao_line_number').clear()
-        driver.find_element_by_id('ao_line_number').send_keys(numero_linea)
+            # Inserisce il numero nella barra di ricerca
+            self.driver.find_element_by_id('ao_line_number').clear()
+            self.driver.find_element_by_id('ao_line_number').send_keys(numero_linea)
 
-        # Invia la ricerca
-        driver.find_element_by_id('ao_line_number_submit').click()
+            # Invia la ricerca
+            self.driver.find_element_by_id('ao_line_number_submit').click()
 
-        print("Ricerca riuscita")
+            print("Ricerca riuscita")
 
-    # In caso l'atttesa del sito duri troppo
-    except TimeoutException:
-        print("ERRORE TIMEOUT: Attesa ricerca linea troppo lunga")
+        # In caso l'atttesa del sito duri troppo
+        except TimeoutException:
+            print("ERRORE TIMEOUT: Attesa ricerca linea troppo lunga")
 
-    except:
-        print("ERRORE: errore durante la ricerca della linea")
-
-
-login("x1019428","Cars.2020")
-cerca_linea("057383193")
+        except:
+            print("ERRORE: errore durante la ricerca della linea")
