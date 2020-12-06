@@ -8,6 +8,9 @@ from selenium.webdriver.common.by import By
 
 class gestione_linea:
     def __init__(self, driver: webdriver, tipo = 'null'):
+        # Divisorio
+        print('\n')
+
         self.driver = driver
         self.tipo_linea = tipo
 
@@ -23,4 +26,4 @@ class gestione_linea:
             if tipo_linea_raw == 'Linea VDSL/EVDSL - FTTC TIM':
                 self.tipo_linea = 'FTTC'
 
-        print("[LINEA] tipo linea: " + self.tipo_linea)
+        print("[LINEA]Tipo linea: " + self.tipo_linea)
