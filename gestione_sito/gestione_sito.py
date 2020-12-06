@@ -6,8 +6,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 
+# Librerie locali
+from gestione_linea import gestione_linea
 
-# Classe atta alla gestione della navigazione nel sito internet
+# Classe principale atta alla gestione della navigazione nel sito internet
 class gestione_sito:
     # Funzione di setup classe
     def __init__(self, driver: webdriver.Chrome, url):
@@ -18,17 +20,16 @@ class gestione_sito:
 
     # Funzione per accedere al sito
     def login(self, username, passworld, tempo_massimo = 10):
-        print("Tentativo di login: " + self.url)
-        print("Nome: " + username + " Pass: " + passworld)
+        print("[SITO]Tentativo di login: " + self.url)
+        print("[SITO]Nome: " + username + " Pass: " + passworld)
 
         # Inserisci credenziali
         try:
             self.driver.find_element_by_name("user").send_keys(username)
             self.driver.find_element_by_name("pwd").send_keys(passworld)
             self.driver.find_element_by_xpath("//input[@type='submit']").click()
-            print("Login riuscito")
         except:
-            print("ERRORE: credenziali errate")
+            print("[SITO]ERRORE: credenziali errate")
 
         # Accetta il disclaimer del sito
         try:
@@ -41,11 +42,11 @@ class gestione_sito:
 
         # In caso l'atttesa del sito duri troppo
         except TimeoutException:
-            print("ERRORE TIMEOUT: Attesa disclaimer troppo lunga")
+            print("[SITO]ERRORE TIMEOUT: Attesa disclaimer troppo lunga")
 
     # Funzione di ricerca linea
     def cerca_linea(self, numero_linea):
-        print('\nRicerca linea: ' + numero_linea)
+        print('[SITO]Ricerca linea: ' + numero_linea)
 
         # Inserisce il numero e inizia la ricerca
         try:
@@ -59,11 +60,13 @@ class gestione_sito:
             # Invia la ricerca
             self.driver.find_element_by_id('ao_line_number_submit').click()
 
-            print("Ricerca riuscita")
-
         # In caso l'atttesa del sito duri troppo
         except TimeoutException:
-            print("ERRORE TIMEOUT: Attesa ricerca linea troppo lunga")
+            print("[SITO]ERRORE TIMEOUT: Attesa ricerca linea troppo lunga")
 
         except:
-            print("ERRORE: errore durante la ricerca della linea")
+            print("[SITO]ERRORE: errore durante la ricerca della linea")
+
+        # Identifica Linea
+        self.linea = gestione_linea(self.driver)
+        self.linea.analizza_linea()
